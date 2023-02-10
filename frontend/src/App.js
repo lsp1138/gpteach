@@ -1,33 +1,48 @@
 import React, { Component } from "react";
 import Modal from "./components/Modal";
+import axios from "axios";
 
-const prompts = [
-  {
-    id: 1,
-    question: "This is hardcoded form the app.js and is complete",
-    completed: true,
-  },
-  {
-    id: 2,
-    question: "This is hardcoded form the app.js and is not complete",
-    completed: false,
-  }
-];
+// const prompts = [
+//   {
+//     id: 1,
+//     question: "This is hardcoded form the app.js and is complete",
+//     completed: true,
+//   },
+//   {
+//     id: 2,
+//     question: "This is hardcoded form the app.js and is not complete",
+//     completed: false,
+//   }
+// ];
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       viewCompleted: false,
-      promptList: prompts,
+      promptList: [],
       modal: false,
       activeItem: {
-        title: "",
-        description: "",
+        question: "",
         completed: false,
       },
     };
   }
+
+  componentDidMount() {
+    this.refreshList();
+  }
+
+  refreshList = () => {
+    axios
+      .get("/api/prompts/")
+      .then((res) => {
+        this.setState({ promptList: res.data });
+        console.log(res);
+      }
+      )
+      .catch((err) => console.log(err));
+  };
 
   toggle = () => {
     this.setState({ modal: !this.state.modal });
@@ -36,15 +51,25 @@ class App extends Component {
   handleSubmit = (item) => {
     this.toggle();
 
-    alert("save" + JSON.stringify(item));
+    if (item.id) {
+      axios
+        .put(`/api/prompts/${item.id}/`, item)
+        .then((res) => this.refreshList());
+      return;
+    }
+    axios
+      .post("/api/prompts/", item)
+      .then((res) => this.refreshList());
   };
 
   handleDelete = (item) => {
-    alert("delete" + JSON.stringify(item));
+    axios
+      .delete(`/api/prompts/${item.id}/`)
+      .then((res) => this.refreshList());
   };
 
   createItem = () => {
-    const item = { title: "", description: "", completed: false };
+    const item = { question: "", completed: false };
 
     this.setState({ activeItem: item, modal: !this.state.modal });
   };
@@ -81,10 +106,11 @@ class App extends Component {
   };
 
   renderItems = () => {
-    const { viewCompleted } = this.state;
-    const newItems = this.state.promptList.filter(
-      (item) => item.completed === viewCompleted
-    );
+    // const { viewCompleted } = this.state;
+    // const newItems = this.state.promptList.filter(
+    //   (item) => item.completed === viewCompleted
+    // );
+    const newItems = this.state.promptList;
 
     return newItems.map((item) => (
       <li
@@ -150,5 +176,6 @@ class App extends Component {
     );
   }
 }
+
 
 export default App;
