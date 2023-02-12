@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import {
   Container,
   Row,
@@ -8,67 +8,64 @@ import {
   Button,
 } from "react-bootstrap";
 
-export default class ChatApp extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      inputValue: props.inputValue ? props.inputValue : "",
-      answerHistory: props.answer_history ? props.answer_history : [],
-    };
+export default function Chat(props) {
+  const [chatEntries, setChatEntries] = useState(props.chatEntries);
+  const [inputValue, setInputValue] = useState("");
+  const [botResponse, setBotResponse] = useState("");
+
+  console.log("chat entries are", props.chatEntries);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    addChatEntry();
   }
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    this.setState((state) => ({
-      answerHistory: [
-        ...state.answerHistory,
-        {
-          userInput: state.inputValue,
-          botResponse: "your answer will appear here",
-        },
-      ],
-      inputValue: "",
-    }));
-  };
+  function addChatEntry() {
+    setChatEntries([
+      ...chatEntries,
+      {
+        userInput: inputValue,
+        botResponse: "some bot response",
+      },
+    ]);
+    setInputValue("");
+    setBotResponse("");
+  }
 
-  render() {
-    const { inputValue, answerHistory } = this.state;
-
-    console.log(inputValue, answerHistory);
-
-    return (
-      <Container
-        style={{
-          height: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Row style={{ width: "50%" }}>
-          {answerHistory.map((history, index) => (
-            <Col key={index} xs={6}>
-              <div className="d-flex justify-content-between">
-                <div className="p-3 mb-2 bg-light">{history.userInput}</div>
-                <div className="p-3 mb-2 bg-light">{history.botResponse}</div>
-              </div>
-            </Col>
-          ))}
-        </Row>
-        <Form onSubmit={this.handleSubmit} className="mt-3">
+  return (
+    <Container
+      style={{
+        width: "60%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        alignItems: "center",
+        backgroundColor: "lightblue",
+      }}
+    >
+      <Row style={{ width: "100%", backgroundColor: "lightgreen" }}>
+        {chatEntries.map((entry, index) => (
+          <Col key={index} xs={12}>
+            <div className="d-flex">
+              <div className="p-3 mb-2 bg-light">{entry.userInput}</div>
+              <div className="p-3 mb-2 bg-light">{entry.botResponse}</div>
+            </div>
+          </Col>
+        ))}
+      </Row>
+      <Row style={{ width: "100%", backgroundColor: "red" }}>
+        <Form onSubmit={handleSubmit} className="mt-3">
           <FormControl
             type="text"
             value={inputValue}
-            onChange={(event) =>
-              this.setState({ inputValue: event.target.value })
-            }
+            onChange={(event) => setInputValue(event.target.value)}
             placeholder="Type your question here..."
           />
           <Button type="submit" className="mt-3">
             Submit
           </Button>
         </Form>
-      </Container>
-    );
-  }
+      </Row>
+    </Container>
+  );
 }
