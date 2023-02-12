@@ -11,7 +11,7 @@ import {
 export default function Chat(props) {
   const [chatEntries, setChatEntries] = useState(props.chatEntries);
   const [inputValue, setInputValue] = useState("");
-  const [botResponse, setBotResponse] = useState("");
+  // const [botResponse, setBotResponse] = useState("");
 
   console.log("chat entries are", props.chatEntries);
 
@@ -29,7 +29,7 @@ export default function Chat(props) {
       },
     ]);
     setInputValue("");
-    setBotResponse("");
+    //setBotResponse("");
   }
 
   return (
