@@ -8,28 +8,15 @@ import {
   Button,
 } from "react-bootstrap";
 
-export default function Chat(props) {
-  const [chatEntries, setChatEntries] = useState(props.chatEntries);
-  const [inputValue, setInputValue] = useState("");
-  // const [botResponse, setBotResponse] = useState("");
+export default function Chat({ chatEntries, onUserInput }) {
+  console.log("chat entries are", chatEntries);
 
-  console.log("chat entries are", props.chatEntries);
+  const [inputValue, setInputValue] = useState("");
 
   function handleSubmit(event) {
     event.preventDefault();
-    addChatEntry();
-  }
-
-  function addChatEntry() {
-    setChatEntries([
-      ...chatEntries,
-      {
-        userInput: inputValue,
-        botResponse: "some bot response",
-      },
-    ]);
+    onUserInput(inputValue);
     setInputValue("");
-    //setBotResponse("");
   }
 
   return (
@@ -44,14 +31,22 @@ export default function Chat(props) {
       }}
     >
       <Row style={{ width: "100%", backgroundColor: "lightgreen" }}>
-        {chatEntries.map((entry, index) => (
-          <Col key={index} xs={12}>
-            <div className="d-flex">
-              <div className="p-3 mb-2 bg-light">{entry.userInput}</div>
-              <div className="p-3 mb-2 bg-light">{entry.botResponse}</div>
-            </div>
-          </Col>
-        ))}
+        {chatEntries.map((entry, index) => {
+          console.log("entry is", entry, "index is", index);
+          return (
+            <Col
+              key={index}
+              style={{
+                backgroundColor: "lightblue",
+                width: "100%",
+              }}
+              xs={8}
+            >
+              <Row className="p-3 mb-2 bg-light">{entry.userInput}</Row>
+              <Row className="p-3 mb-2 bg-light">{entry.botResponse}</Row>
+            </Col>
+          );
+        })}
       </Row>
       <Row style={{ width: "100%", backgroundColor: "red" }}>
         <Form onSubmit={handleSubmit} className="mt-3">
