@@ -7,12 +7,12 @@ const data = [{ inputValue: "input", botResponse: "some bot response" }];
 function App() {
   const [chatEntries, setChatEntries] = useState(data);
 
-  function onUserInput(inputValue) {
+  function onUserInput(question, botResponse) {
     setChatEntries([
       ...chatEntries,
       {
-        userInput: inputValue,
-        botResponse: "some bot response",
+        question: question,
+        botResponse: botResponse,
       },
     ]);
   }

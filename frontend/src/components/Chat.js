@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import axios from "axios";
+
 import {
   Container,
   Row,
@@ -15,8 +17,18 @@ export default function Chat({ chatEntries, onUserInput }) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    onUserInput(inputValue);
-    setInputValue("");
+
+    if (!inputValue) return;
+
+    // simulate call to back end
+    axios
+      .post("http://localhost:3000/api/prompts/", { question: inputValue })
+      .then((response) => {
+        console.log("response is", response.data);
+
+        onUserInput(inputValue, response.data.question);
+        setInputValue("");
+      });
   }
 
   return (
@@ -42,7 +54,7 @@ export default function Chat({ chatEntries, onUserInput }) {
               }}
               xs={8}
             >
-              <Row className="p-3 mb-2 bg-light">{entry.userInput}</Row>
+              <Row className="p-3 mb-2 bg-light">{entry.question}</Row>
               <Row className="p-3 mb-2 bg-light">{entry.botResponse}</Row>
             </Col>
           );
