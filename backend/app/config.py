@@ -12,6 +12,10 @@ log = logging.getLogger("uvicorn")
 class Settings(BaseSettings):
     environment: str = "dev"
     testing: bool = 0
+    openai_api_key: str
+
+    class Config:
+        env_file = ".env"
 
 
 @lru_cache()
