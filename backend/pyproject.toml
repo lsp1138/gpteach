@@ -23,7 +23,12 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = []
+dependencies = [
+  "fastapi",
+  "uvicorn",
+  "requests",
+  "python-dotenv"
+]
 version="0.1.0"
 
 [project.urls]
