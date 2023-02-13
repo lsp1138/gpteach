@@ -22,11 +22,10 @@ export default function Chat({ chatEntries, onUserInput }) {
 
     // simulate call to back end
     axios
-      .post("http://localhost:3000/api/prompts/", { question: inputValue })
+      .post("http://localhost:3000/prompts/", { question: inputValue })
       .then((response) => {
         console.log("response is", response.data);
-
-        onUserInput(inputValue, response.data.question);
+        onUserInput(inputValue, response.data);
         setInputValue("");
       });
   }
