@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import Chat from "./components/Chat";
 //import axios from "axios";
 
-const data = [{ inputValue: "input", botResponse: "some bot response" }];
-
 function App() {
-  const [chatEntries, setChatEntries] = useState(data);
+  const [chatEntries, setChatEntries] = useState([]);
 
   function onUserInput(question, botResponse) {
     setChatEntries([
