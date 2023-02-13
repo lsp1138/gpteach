@@ -24,15 +24,12 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = []
-dynamic = ["version"]
+version="0.1.0"
 
 [project.urls]
 Documentation = "https://github.com/unknown/backend#readme"
 Issues = "https://github.com/unknown/backend/issues"
 Source = "https://github.com/unknown/backend"
-
-[tool.hatch.version]
-path = "backend/__about__.py"
 
 [tool.hatch.envs.default]
 dependencies = [
