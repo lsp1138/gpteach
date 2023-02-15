@@ -31,43 +31,31 @@ export default function Chat({ chatEntries, onUserInput }) {
   }
 
   return (
-    <Container
-      style={{
-        width: "60%",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        alignItems: "center",
-        backgroundColor: "lightblue",
-      }}
-    >
-      <Row style={{ width: "100%", backgroundColor: "lightgreen" }}>
+    <Container className="output-container">
+      <Row className="output-container-row-pair col-12">
         {chatEntries.map((entry, index) => {
           console.log("entry is", entry, "index is", index);
           return (
-            <Col
-              key={index}
-              style={{
-                backgroundColor: "lightblue",
-                width: "100%",
-              }}
-              xs={8}
-            >
-              <Row className="p-3 mb-2 bg-light">{entry.question}</Row>
-              <Row className="p-3 mb-2 bg-light">{entry.botResponse}</Row>
+            <Col key={index} className="col-12">
+              <Row className="output-container-question">
+                Answer: {entry.botResponse}
+              </Row>
+              <Row className="output-container-response">
+                Question: {entry.question}
+              </Row>
             </Col>
           );
         })}
       </Row>
-      <Row style={{ width: "100%", backgroundColor: "red" }}>
-        <Form onSubmit={handleSubmit} className="mt-3">
+      <Row className="prompt-container">
+        <Form onSubmit={handleSubmit}>
           <FormControl
             type="text"
             value={inputValue}
             onChange={(event) => setInputValue(event.target.value)}
             placeholder="Type your question here..."
           />
-          <Button type="submit" className="mt-3">
+          <Button type="submit" className="m-1">
             Submit
           </Button>
         </Form>
