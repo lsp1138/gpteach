@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
-//import Chat from "./components/Chat";
-//import axios from "axios";
+import axios from "axios";
 
 function App() {
-  const chatHistory = [
+  const data = [
     {
       question: "cat",
       botResponse:
@@ -17,17 +16,37 @@ function App() {
     },
   ];
 
-  // const [chatEntries, setChatEntries] = useState(data);
+  const [inputValue, setInputValue] = useState("");
 
-  // function onUserInput(question, botResponse) {
-  //   setChatEntries([
-  //     ...chatEntries,
-  //     {
-  //       question: question,
-  //       botResponse: botResponse,
-  //     },
-  //   ]);
-  // }
+  const [chatEntries, setChatEntries] = useState(data);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    console.log("in handle submit", inputValue);
+
+    if (!inputValue) return;
+
+    console.log("started handle submit");
+
+    axios
+      .post("http://localhost:3000/prompts/", { question: inputValue })
+      .then((response) => {
+        console.log("response is", response.data);
+
+        setChatEntries([
+          ...chatEntries,
+          {
+            question: inputValue,
+            botResponse: response.data,
+          },
+        ]);
+
+        setInputValue("");
+      })
+      .catch((error) => {
+        console.log("something went wrong");
+      });
+  }
 
   return (
     <>
@@ -35,7 +54,7 @@ function App() {
       <Container className="border">
         <Row>
           <Col>
-            {chatHistory.map((entry, index) => (
+            {chatEntries.map((entry, index) => (
               <Row key={index} className="border">
                 <div>
                   <b>{entry.question}</b>
@@ -48,10 +67,12 @@ function App() {
         <Row>
           <Form>
             <Form.Group>
-              <Form.Label>Input your questions here</Form.Label>
-              <Form.Control placeholder="Prompt" />
+              <Form.Control
+                onChange={(e) => setInputValue(e.target.value)}
+                placeholder="write your question here"
+              />
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" onClick={handleSubmit}>
               Submit
             </Button>
           </Form>
