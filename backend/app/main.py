@@ -55,7 +55,7 @@ async def create_prompt(prompt: Prompt, settings: Settings = Depends(get_setting
 
 
 def generate_prompt(question):
-    return """YYou are a friendly Portuguese teacher.  The student will ask you questions in english about learning portuguese from Portugal. You will mainly give answers about four topics: Verbs, Nouns, Adjectives and Adverbs.  
+    return """You are a friendly Portuguese teacher.  The student will ask you questions in english about learning portuguese from Portugal. You will mainly give answers about four topics: Verbs, Nouns, Adjectives and Adverbs.  
 
 Question: What is the meaning of the word "casa"?
 Answer: Casa is a noun. It means "house".
