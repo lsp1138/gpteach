@@ -28,7 +28,7 @@ function App() {
       question: "Conjugate walk",
       botResponse: `Comer (inf), means *to eat*
       
-| Pronoun | Present Tense |
+| Pronoun | Present |
 | --- | --- |
 | eu | como |
 | tu | comes |
@@ -38,20 +38,6 @@ function App() {
 | eles | comem |
       
       `,
-    },
-    {
-      question: "test",
-      botResponse: `> A block quote with ~strikethrough~ and a URL: https://reactjs.org.
-
-* Lists
-* [ ] todo
-* [x] done
-
-A table:
-
-| a | b |
-| - | - |
-`,
     },
   ];
 
@@ -97,8 +83,8 @@ A table:
           <Nav.Link href="#about">About</Nav.Link>
         </Nav>
       </Navbar>
-      <Container className="my-2 d-flex flex-column justify-content-end bg-light rounded overflow-auto">
-        <Row>
+      <Container className="my-2 d-flex flex-column justify-content-end bg-light rounded">
+        <Row className="overflow-auto d-flex flex-column-reverse">
           <Col>
             {chatEntries.map((entry, index) => (
               <Row key={index} className="p-2">
