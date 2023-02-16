@@ -66,22 +66,18 @@ function App() {
           <Nav.Link href="#about">About</Nav.Link>
         </Nav>
       </Navbar>
-      <Container className="my-2 d-flex flex-column justify-content-end bg-secondary rounded overflow-auto">
+      <Container className="my-2 d-flex flex-column justify-content-end bg-light rounded overflow-auto">
         <Row>
           <Col>
             {chatEntries.map((entry, index) => (
               <Row key={index} className="p-2">
-                <div class="text-start p-1">
-                  <b>{entry.question}</b>
-                </div>
-                <div class="text-start p-1 border rounded border-dark">
-                  {entry.botResponse}
-                </div>
+                <div class="text-start p-2 ">Q: {entry.question}</div>
+                <div class="text-start p-2 border">A: {entry.botResponse}</div>
               </Row>
             ))}
           </Col>
         </Row>
-        <Row className="py-3">
+        <Row className="py-3 bg-light">
           <Form>
             <Form.Group className="py-1">
               <Form.Control
