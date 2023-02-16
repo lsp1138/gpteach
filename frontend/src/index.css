@@ -18,3 +18,11 @@ code {
 .container {
   height: 800px;
 }
+
+.markdown th,
+tr,
+td {
+  border: 1px solid;
+  padding-inline: 5px;
+  padding-block: 2px;
+}
