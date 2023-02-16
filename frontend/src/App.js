@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Container, Col, Row, Form, Button } from "react-bootstrap";
+import {
+  Container,
+  Navbar,
+  Nav,
+  Col,
+  Row,
+  Form,
+  Button,
+} from "react-bootstrap";
 import axios from "axios";
 
 function App() {
@@ -50,31 +58,46 @@ function App() {
 
   return (
     <>
-      <h1>Teach Teach Teach</h1>
-      <Container className="border">
+      <Navbar className="p-1" bg="dark" variant="dark">
+        <Navbar.Brand href="#home">Teach GPT</Navbar.Brand>
+        <Nav className="">
+          <Nav.Link href="#features">Features</Nav.Link>
+          <Nav.Link href="#pricing">Pricing</Nav.Link>
+          <Nav.Link href="#about">About</Nav.Link>
+        </Nav>
+      </Navbar>
+      <Container className="my-2 d-flex flex-column justify-content-end bg-secondary rounded overflow-auto">
         <Row>
           <Col>
             {chatEntries.map((entry, index) => (
-              <Row key={index} className="border">
-                <div>
+              <Row key={index} className="p-2">
+                <div class="text-start p-1">
                   <b>{entry.question}</b>
                 </div>
-                <div>{entry.botResponse}</div>
+                <div class="text-start p-1 border rounded border-dark">
+                  {entry.botResponse}
+                </div>
               </Row>
             ))}
           </Col>
         </Row>
-        <Row>
+        <Row className="py-3">
           <Form>
-            <Form.Group>
+            <Form.Group className="py-1">
               <Form.Control
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="write your question here"
               />
             </Form.Group>
-            <Button variant="primary" type="submit" onClick={handleSubmit}>
-              Submit
-            </Button>
+            <div class="d-flex justify-content-end py-1">
+              <Button
+                variant="outline-dark"
+                type="submit"
+                onClick={handleSubmit}
+              >
+                Submit
+              </Button>
+            </div>
           </Form>
         </Row>
       </Container>

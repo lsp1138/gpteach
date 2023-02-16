@@ -5,6 +5,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: darkslategray;
+  height: 100%;
+  color: white;
+  text-align: center;
 }
 
 code {
@@ -14,8 +18,4 @@ code {
 
 .container {
   height: 800px;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  justify-content: flex-end;
 }
