@@ -29,13 +29,18 @@ app.add_middleware(
 )
 
 
-@app.get("/prompts")
+@app.get("/api")
+def healthcheck():
+    return {"response": "hello from fast api"}
+
+
+@app.get("/api/prompts")
 async def get_prompts(Settings: Settings = Depends(get_settings)):
     log.info("Getting prompts")
     return {"question": "a question", "botResponse": "a bot response"}
 
 
-@app.post("/prompts")
+@app.post("/api/prompts")
 async def create_prompt(prompt: Prompt, settings: Settings = Depends(get_settings)):
 
     log.info(f"Prompt question {prompt.question}")

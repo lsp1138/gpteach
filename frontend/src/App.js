@@ -54,7 +54,7 @@ function App() {
     console.log("started handle submit");
 
     axios
-      .post("http://localhost:3000/prompts/", { question: inputValue })
+      .post("http://localhost:3000/api/prompts/", { question: inputValue })
       .then((response) => {
         console.log("response is", response.data);
 
