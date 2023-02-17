@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Navbar,
@@ -45,6 +45,22 @@ function App() {
 
   const [chatEntries, setChatEntries] = useState(data);
 
+  const [loaded, setLoad] = useState(false);
+
+  useEffect(() => {
+    if (loaded) return;
+
+    apiHealthcheck();
+    setLoad(true);
+    return;
+  }, [loaded]);
+
+  function apiHealthcheck() {
+    fetch("/healthcheck")
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
     console.log("in handle submit", inputValue);
@@ -54,7 +70,7 @@ function App() {
     console.log("started handle submit");
 
     axios
-      .post("http://localhost:3000/api/prompts/", { question: inputValue })
+      .post("/prompts", { question: inputValue })
       .then((response) => {
         console.log("response is", response.data);
 
