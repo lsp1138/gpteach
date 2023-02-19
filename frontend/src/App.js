@@ -56,9 +56,10 @@ function App() {
   }, [loaded]);
 
   function apiHealthcheck() {
-    fetch("/healthcheck")
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error));
+    axios
+      .get("/api/healthcheck")
+      .then((response) => console.log(response.data))
+      .catch((error) => console.log("Failed fetch", error));
   }
 
   function handleSubmit(event) {
@@ -70,7 +71,7 @@ function App() {
     console.log("started handle submit");
 
     axios
-      .post("/prompts", { question: inputValue })
+      .post("/api/prompts", { question: inputValue })
       .then((response) => {
         console.log("response is", response.data);
 
@@ -85,7 +86,7 @@ function App() {
         setInputValue("");
       })
       .catch((error) => {
-        console.log("something went wrong");
+        console.log("something went wrong", error);
       });
   }
 

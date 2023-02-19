@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  backend:
+    env_file: ./backend/.env
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    build: ./backend
+    command: uvicorn app.main:app --root-path /api --proxy-headers --host 0.0.0.0 --port 8000
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8080:80"
+    environment:
+      - LOG_LEVEL=DEBUG
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - backend
+
+volumes:
+  caddy-data:
+  caddy-config:

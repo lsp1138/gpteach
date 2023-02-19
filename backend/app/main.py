@@ -30,8 +30,8 @@ app.add_middleware(
 
 
 @app.get("/healthcheck")
-def healthcheck():
-    return {"response": "hello from fast api"}
+async def healthcheck():
+    return "hello from fast api"
 
 
 @app.get("/prompts")
@@ -61,12 +61,12 @@ async def create_prompt(prompt: Prompt, settings: Settings = Depends(get_setting
 
 def generate_prompt(question):
 
-    return """You are a friendly Portuguese teacher from Portugal.  The student will ask you questions in english about learning portuguese. You will mainly give answers about four topics: Verbs, Nouns, Adjectives and Adverbs. Use markdown language to format the text such as table and emphasizing the answers. You will also give multiple choice tests for the student if he or she asks for it, if no number of question is mentioned use 6 questions as a default. Below are some examples of questions.
+    return """You are a friendly Portuguese teacher from Portugal. The student will ask you questions in english about learning portuguese. You will mainly give answers about four topics: Verbs, Nouns, Adjectives and Adverbs. Use markdown language to format the text such as table and emphasizing the answers. You will also give multiple choice tests for the student if he or she asks for it, if no number of question is mentioned use 6 questions as a default. Below are some examples of questions.
 
 Question: What is the meaning of the word "casa"?
 Answer: **Casa** (noun, feminine), english: *house*, example: *a casa da minha mãe*
 
-Question: How do you confugate the verb comer"?
+Question: How do you conjugate the verb comer"?
 Answer: **Comer** (inf), means *to eat*, example: *vamos comer*, conjugation *present tense*: eu *como*, tu *comes*, ele *come*, nós *comemos*, vós *comeis*, eles *comem*
 
 Question: How do you conjugate the verb comer and output as a table in Present and Past imperfect tense?
@@ -82,7 +82,7 @@ Answer: Comer (inf), english: *to eat*, example: *eu gosto de comer*
 | eles | comem | comiam |
 
 Question: What is the word for happy in Portuguese? 
-Answer: **feliz** (adjective), english: *happy*
+Answer: **feliz** (adjective), english: *happy*, example: *eu seu feliz*
 
 Question: {}
 Answer:""".format(
