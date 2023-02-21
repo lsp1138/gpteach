@@ -31,7 +31,8 @@ app.add_middleware(
 
 
 @app.get("/healthcheck")
-async def healthcheck():
+async def healthcheck(settings: Settings = Depends(get_settings)):
+    log.info(f"ENV key set: {settings.openai_api_key[:4]}")
     return "hello from fast api"
 
 
