@@ -36,12 +36,6 @@ async def healthcheck(settings: Settings = Depends(get_settings)):
     return "hello from fast api"
 
 
-@app.get("/prompts")
-async def get_prompts(Settings: Settings = Depends(get_settings)):
-    log.info("Getting prompts")
-    return {"question": "a question", "botResponse": "a bot response"}
-
-
 @app.post("/prompts")
 async def create_prompt(prompt: Prompt, settings: Settings = Depends(get_settings)):
 
