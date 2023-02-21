@@ -1,0 +1,31 @@
+services:
+  # A Docker web service
+  - type: web
+    name: gpteach-backend
+    env: docker
+    region: frankfurt # optional (defaults to oregon)
+    plan: standard # optional (defaults to starter)
+    branch: main # optional (defaults to master)
+    rootDir: backend
+    healthCheckPath: /healthcheck
+
+  # A static site
+  - type: web
+    name: gpteach
+    env: static
+    buildCommand: yarn build
+    staticPublishPath: ./build
+    pullRequestPreviewsEnabled: true # optional
+    buildFilter:
+      paths:
+        - src/**/*.js
+      ignoredPaths:
+        - src/**/*.test.js
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: sameorigin
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: /
