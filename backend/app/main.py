@@ -17,7 +17,7 @@ app = FastAPI()
 
 
 origins = [
-    "https://gpeach-frontend.onrender.com",
+    "https://gpeatch-frontend.onrender.com",
     "http://localhost:3000",
 ]
 
