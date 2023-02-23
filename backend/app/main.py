@@ -54,6 +54,8 @@ async def create_prompt(prompt: Prompt, settings: Settings = Depends(get_setting
         max_tokens=500,
     )
 
-    log.info(f"Bot response {response}")
+    response_text = "[" + response.choices[0].text
 
-    return response.choices[0].text
+    log.info(f"Bot response {response_text}")
+
+    return response_text

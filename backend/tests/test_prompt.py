@@ -2,4 +2,9 @@ from app.prompt import generate_prompt
 
 
 def test_generate_prompt():
-    assert isinstance(generate_prompt("question"), str)
+
+    prompt = generate_prompt("question")
+
+    print(prompt)
+
+    assert isinstance(prompt, str)
