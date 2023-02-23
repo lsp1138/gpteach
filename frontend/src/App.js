@@ -12,32 +12,35 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import axios from "axios";
 
+const renderComponents = {
+  content: renderMarkdown,
+};
+
+// Render components refactor when possible
+function renderMarkdown(children) {
+  console.log("in markdown render function");
+  return <ReactMarkdown children={children} remarkPlugins={[remarkGfm]} />;
+}
+
 function App() {
   const data = [
     {
       question: "What does cat mean in Portuguese",
-      botResponse:
-        "Cat is *gato*, and this is in portuguese would you know I am just making a long answer so I can get this tested",
+      botResponse: [
+        {
+          type: "content",
+          body: "Cat is *gato*, and this is in portuguese would you know I am just making a long answer so I can get this tested",
+        },
+      ],
     },
     {
       question: "What is dog?",
-      botResponse:
-        "dog is *cao*, as much as I konw portugues this is the case and that is all that I can say",
-    },
-    {
-      question: "Conjugate walk",
-      botResponse: `Comer (inf), means *to eat*
-      
-| Pronoun | Present |
-| --- | --- |
-| eu | como |
-| tu | comes |
-| ele | come |
-| nós | comemos |
-| vós | comeis |
-| eles | comem |
-      
-      `,
+      botResponse: [
+        {
+          type: "content",
+          body: "dog is *cao*, as much as I konw portugues this is the case and that is all that I can say",
+        },
+      ],
     },
   ];
 
@@ -109,10 +112,12 @@ function App() {
                   Q: {entry.question}
                 </div>
                 <div className="markdown text-start p-2 border">
-                  <ReactMarkdown
-                    children={entry.botResponse}
-                    remarkPlugins={[remarkGfm]}
-                  />
+                  {
+                    //console.log(entry.botResponse[0].type)
+                    renderComponents[entry.botResponse[0].type](
+                      entry.botResponse[0].body
+                    )
+                  }
                 </div>
               </Row>
             ))}
