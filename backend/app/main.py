@@ -1,8 +1,12 @@
+import json
+
 import openai
 from app.config import Settings, get_settings, log
 from app.prompt import generate_prompt
 from fastapi import Depends, FastAPI
+from fastapi.encoders import jsonable_encoder
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
 
@@ -43,19 +47,29 @@ async def get_prompts(Settings: Settings = Depends(get_settings)):
 @app.post("/prompts")
 async def create_prompt(prompt: Prompt, settings: Settings = Depends(get_settings)):
 
-    log.info(f"Prompt question {prompt.question}")
+    prompt_str = generate_prompt(prompt.question)
+
+    log.info(f"Prompt question {prompt_str}")
 
     openai.api_key = settings.openai_api_key
 
     response = openai.Completion.create(
         model="text-davinci-003",
-        prompt=generate_prompt(prompt.question),
+        prompt=prompt_str,
         temperature=0.0,
         max_tokens=500,
     )
 
-    response_text = "[" + response.choices[0].text
+    response_text = "{" + response.choices[0].text
 
-    log.info(f"Bot response {response_text}")
+    log.info(f"What is the response text {response.choices[0].text}")
 
-    return response_text
+    try:
+        json_response_text = jsonable_encoder(response_text)
+        json_response = json.loads(json_response_text)
+
+        log.info(f"what is the respnse {type(json_response)}")
+    except Exception as e:
+        log.error(f"Something went wrong {e}")
+
+    return json_response
