@@ -14,11 +14,12 @@ import axios from "axios";
 
 const renderComponents = {
   content: renderMarkdown,
+  table: (children) => "nothing",
+  multipleChoice: (children) => "nothing",
 };
 
 // Render components refactor when possible
 function renderMarkdown(children) {
-  console.log("in markdown render function");
   return <ReactMarkdown children={children} remarkPlugins={[remarkGfm]} />;
 }
 
@@ -26,21 +27,61 @@ function App() {
   const data = [
     {
       question: "What does cat mean in Portuguese",
-      botResponse: [
-        {
-          type: "content",
-          body: "Cat is *gato*, and this is in portuguese would you know I am just making a long answer so I can get this tested",
-        },
-      ],
+      botResponse: {
+        type: "content",
+        body: "Cat is *gato*, and this is in portuguese would you know I am just making a long answer so I can get this tested",
+      },
     },
     {
       question: "What is dog?",
-      botResponse: [
-        {
-          type: "content",
-          body: "dog is *cao*, as much as I konw portugues this is the case and that is all that I can say",
+      botResponse: {
+        type: "content",
+        body: "dog is *cao*, as much as I konw portugues this is the case and that is all that I can say",
+      },
+    },
+    {
+      question:
+        "Conjugate of the verb falar in present and past tense in a table in JSON with a key 'column-heading' containing the tense as a markdown string and a scond JSON key called 'column-rows' which is an array of arrays of the pronouns and verb conjugations in the different tenses",
+      botResponse: {
+        type: "table",
+        body: {
+          columns: [
+            {
+              heading: "Present Tense",
+              rows: [
+                ["eu", "falo"],
+                ["tu", "falas"],
+                ["ele/ela/você", "fala"],
+                ["nós", "falamos"],
+                ["vós", "falais"],
+                ["eles/elas/vocês", "falam"],
+              ],
+            },
+            {
+              heading: "Past Tense",
+              rows: [
+                ["eu", "falava"],
+                ["tu", "falavas"],
+                ["ele/ela/você", "falava"],
+                ["nós", "falávamos"],
+                ["vós", "faláveis"],
+                ["eles/elas/vocês", "falavam"],
+              ],
+            },
+          ],
         },
-      ],
+      },
+    },
+    {
+      question: "Create a multiple choice question for a noun",
+      botResponse: {
+        type: "multipleChoice",
+        body: {
+          question: "What is the Portuguese word for 'cat'?",
+          options: ["Gato", "Cão", "Vaca", "Casa"],
+          answer: "Gato",
+        },
+      },
     },
   ];
 
@@ -76,7 +117,12 @@ function App() {
     axios
       .post("/api/prompts", { question: inputValue })
       .then((response) => {
-        console.log("response is", response.data);
+        console.log(
+          "response is",
+          response.data,
+          "and the chatresponse is",
+          chatEntries
+        );
 
         setChatEntries([
           ...chatEntries,
@@ -85,6 +131,8 @@ function App() {
             botResponse: response.data,
           },
         ]);
+
+        console.log("chatEntries are ", chatEntries);
 
         setInputValue("");
       })
@@ -112,12 +160,10 @@ function App() {
                   Q: {entry.question}
                 </div>
                 <div className="markdown text-start p-2 border">
-                  {
-                    //console.log(entry.botResponse[0].type)
-                    renderComponents[entry.botResponse[0].type](
-                      entry.botResponse[0].body
-                    )
-                  }
+                  {console.log(entry.botResponse.type)}
+                  {renderComponents[entry.botResponse.type](
+                    entry.botResponse.body
+                  )}
                 </div>
               </Row>
             ))}
