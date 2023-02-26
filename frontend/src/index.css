@@ -21,4 +21,5 @@ td {
   border: 1px solid;
   padding-inline: 5px;
   padding-block: 2px;
+  min-width: 6em;
 }
