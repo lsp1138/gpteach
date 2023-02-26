@@ -9,7 +9,7 @@ import {
   Button,
 } from "react-bootstrap";
 import FlexTable from "./components/FlexTable.js";
-import MultipleChoice from "./components/FlexTable.js";
+import MultipleChoice from "./components/MutlipleChoice";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import axios from "axios";
@@ -53,10 +53,10 @@ function App() {
               rows: [
                 ["eu", "falo"],
                 ["tu", "falas"],
-                ["ele/ela/você", "fala"],
+                ["ele/ela", "fala"],
                 ["nós", "falamos"],
                 ["vós", "falais"],
-                ["eles/elas/vocês", "falam"],
+                ["eles/elas", "falam"],
               ],
             },
             {
@@ -64,10 +64,10 @@ function App() {
               rows: [
                 ["eu", "falava"],
                 ["tu", "falavas"],
-                ["ele/ela/você", "falava"],
+                ["ele/ela", "falava"],
                 ["nós", "falávamos"],
                 ["vós", "faláveis"],
-                ["eles/elas/vocês", "falavam"],
+                ["eles/elas", "falavam"],
               ],
             },
           ],

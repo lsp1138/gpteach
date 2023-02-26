@@ -15,10 +15,6 @@ code {
     monospace;
 }
 
-.container {
-  height: 800px;
-}
-
 .markdown th,
 tr,
 td {

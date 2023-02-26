@@ -19,10 +19,10 @@ Anwswer: {
         "rows": [
             ["eu", "falo"],
             ["tu", "falas"],
-            ["ele/ela/você", "fala"],
+            ["ele/ela", "fala"],
             ["nós", "falamos"],
             ["vós", "falais"],
-            ["eles/elas/vocês", "falam"]
+            ["eles/elas", "falam"]
         ]
         },
         {
@@ -30,10 +30,10 @@ Anwswer: {
         "rows": [
             ["eu", "falava"],
             ["tu", "falavas"],
-            ["ele/ela/você", "falava"],
+            ["ele/ela", "falava"],
             ["nós", "falávamos"],
             ["vós", "faláveis"],
-            ["eles/elas/vocês", "falavam"]
+            ["eles/elas", "falavam"]
         ]
         }
     ]
@@ -53,7 +53,7 @@ Answer: {
 Question: conjugate the verb comer in present tense
 Answer: {
     "type": "content",
-    "body": "**Comer** (inf), means *to eat*, example: *vamos comer*, conjugation *present tense*: eu *como*, tu *comes*, ele *come*, nós *comemos*, vós *comeis*, eles *comem*"
+    "body": "**Comer** (inf), means *to eat*, example: *vamos comer*, conjugation *present tense*: eu *como*, tu *comes*, ele/ela *come*, nós *comemos*, vós *comeis*, eles/elas *comem*"
 }
 
 Question: what is a cow in portuguese
