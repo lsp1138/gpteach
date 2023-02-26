@@ -8,14 +8,16 @@ import {
   Form,
   Button,
 } from "react-bootstrap";
+import FlexTable from "./components/FlexTable.js";
+import MultipleChoice from "./components/FlexTable.js";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import axios from "axios";
 
 const renderComponents = {
   content: renderMarkdown,
-  table: (children) => "nothing",
-  multipleChoice: (children) => "nothing",
+  table: FlexTable,
+  multipleChoice: MultipleChoice,
 };
 
 // Render components refactor when possible
