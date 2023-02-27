@@ -1,7 +1,7 @@
 // A flex box with tables inside for a responsive output
 // of conjugation tables
 
-function TableChoice(body) {
+export function FlexTable(body) {
   console.log("body is", body);
 
   return (
@@ -32,5 +32,3 @@ function TableChoice(body) {
     </div>
   );
 }
-
-export default TableChoice;

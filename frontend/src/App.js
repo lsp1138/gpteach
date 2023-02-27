@@ -8,8 +8,8 @@ import {
   Form,
   Button,
 } from "react-bootstrap";
-import FlexTable from "./components/FlexTable.js";
-import MultipleChoice from "./components/MutlipleChoice";
+import { FlexTable } from "./components/FlexTable.js";
+import { MultipleChoice } from "./components/MutlipleChoice";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import axios from "axios";

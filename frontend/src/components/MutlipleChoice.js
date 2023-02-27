@@ -4,60 +4,86 @@
 // a score when all the questions are answered
 import { useState } from "react";
 
-function MultipleChoice(body, calcScore) {
+export function MultipleChoice(body) {
   console.log("body is", body);
 
-  const [questionScore, setQuestionScore] = useState("");
+  const [questionScore, setQuestionScore] = useState([]);
+  const [isComplete, setIsComplete] = useState(false);
 
-  function calculateScores() {
+  function calculateScores(newScore) {
     console.log("calculate scores", questionScore);
+
+    // Set the new score
+    setQuestionScore([
+      ...questionScore,
+      {
+        ...newScore,
+      },
+    ]);
+
+    setIsComplete(questionScore.length === body.length);
   }
 
-  function onClickHandler(question, input, isCorrect = false) {
-    // receive the click from a question and update the score
-    console.log("updated the score ", question, input, isCorrect);
-
-    setQuestionScore("score is set");
-
-    return "";
+  function onSubmit() {
+    console.log("on submit");
   }
 
   return (
     <div className="d-flex flex-column p-1">
       <div>Multiple choice question</div>
-      {body.map((mcQuestion, indexQuestion) => (
-        <div className="py-2" key={"question-" + indexQuestion}>
-          <div className="fst-italic">{mcQuestion.question}</div>
-          <div className="form-check">
-            {mcQuestion.options.map((option, indexOption) => {
-              // id of input
-              let inputId = "input-q-" + mcQuestion.id + "-o-" + option.id;
-
-              return (
-                <div key={"option-" + indexOption}>
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name={inputId}
-                    id={inputId}
-                    onClick={() =>
-                      onClickHandler(mcQuestion.id, option.id, option.isCorrect)
-                    }
-                  />
-                  <label className="form-check-label" htmlFor={inputId}>
-                    {option.option}
-                  </label>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+      {body.map((mcQuestion) => (
+        <RadioFormInputGroup
+          key={mcQuestion.id}
+          {...mcQuestion}
+          onUpdateScore={calculateScores}
+        />
       ))}
       <div className="d-flex justify-content-start">
-        <button onClick={calculateScores}>Submit</button>
+        <button onClick={onSubmit} disabled={!isComplete}>
+          Submit
+        </button>
       </div>
     </div>
   );
 }
 
-export default MultipleChoice;
+// RadioFormInputGroup
+
+export function RadioFormInputGroup({
+  question,
+  options,
+  isCorrect,
+  onUpdateScore,
+}) {
+  const [score, setScore] = useState(null);
+
+  function handleClick(e) {
+    setScore(isCorrect && e.target.value);
+
+    onUpdateScore({ id: question.id, score: score });
+  }
+
+  return (
+    <div>
+      <div className="fst-italic">{question}</div>
+      <div className="form-check">
+        {options.map((option) => {
+          return (
+            <div key={option.id}>
+              <input
+                className="form-check-input"
+                type="radio"
+                name={option.id}
+                id={option.id}
+                onClick={(e) => handleClick}
+              />
+              <label className="form-check-label" htmlFor={option.id}>
+                {option.question}
+              </label>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
