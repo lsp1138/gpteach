@@ -43,11 +43,12 @@ Anwswer: {
 Question: Create a multiple choice question for a noun
 Answer: {
     "type": "multipleChoice",
-    "body": {
+    "body": [{
+    "id": 1,
     "question": "What is the Portuguese word for 'cat'?",
     "options": ["Gato", "Cão", "Vaca", "Casa"],
     "answer": "Gato"
-  }
+  }]
 }
 
 Question: conjugate the verb comer in present tense

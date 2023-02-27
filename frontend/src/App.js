@@ -78,11 +78,28 @@ function App() {
       question: "Create a multiple choice question for a noun",
       botResponse: {
         type: "multipleChoice",
-        body: {
-          question: "What is the Portuguese word for 'cat'?",
-          options: ["Gato", "Cão", "Vaca", "Casa"],
-          answer: "Gato",
-        },
+        body: [
+          {
+            id: 1,
+            question: "What is the Portuguese word for 'cat'?",
+            options: [
+              { id: 1, option: "Gato", isCorrect: true },
+              { id: 2, option: "Cão" },
+              { id: 3, option: "Vaca" },
+              { id: 4, option: "Casa" },
+            ],
+          },
+          {
+            id: 2,
+            question: "What is the Portuguese word for 'dog'?",
+            options: [
+              { id: 1, option: "Gato" },
+              { id: 2, option: "Cão", isCorrect: true },
+              { id: 3, option: "Vaca" },
+              { id: 4, option: "Casa" },
+            ],
+          },
+        ],
       },
     },
   ];
