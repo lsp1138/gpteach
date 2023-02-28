@@ -2,18 +2,14 @@
 // questions are rendered as groups of radio buttons with
 // a built in handler that returns correct of incorrect and a
 // a score when all the questions are answered
+
 import { useState } from "react";
 
 export function MultipleChoice(body) {
-  console.log("body is", body);
-
   const [questionScore, setQuestionScore] = useState([]);
   const [isComplete, setIsComplete] = useState(false);
 
   function calculateScores(newScore) {
-    console.log("calculate scores", questionScore);
-
-    // Set the new score
     setQuestionScore([
       ...questionScore,
       {
@@ -22,6 +18,9 @@ export function MultipleChoice(body) {
     ]);
 
     setIsComplete(questionScore.length === body.length);
+
+    console.log("is complete", isComplete);
+    console.log("question score", questionScore);
   }
 
   function onSubmit() {
@@ -31,15 +30,15 @@ export function MultipleChoice(body) {
   return (
     <div className="d-flex flex-column p-1">
       <div>Multiple choice question</div>
-      {body.map((mcQuestion) => (
+      {body.map((mcQuestion, index) => (
         <RadioFormInputGroup
-          key={mcQuestion.id}
-          {...mcQuestion}
+          key={index}
           onUpdateScore={calculateScores}
+          {...mcQuestion}
         />
       ))}
       <div className="d-flex justify-content-start">
-        <button onClick={onSubmit} disabled={!isComplete}>
+        <button onClick={onSubmit} disabled={false}>
           Submit
         </button>
       </div>
@@ -47,20 +46,13 @@ export function MultipleChoice(body) {
   );
 }
 
-// RadioFormInputGroup
-
-export function RadioFormInputGroup({
-  question,
-  options,
-  isCorrect,
-  onUpdateScore,
-}) {
-  const [score, setScore] = useState(null);
-
-  function handleClick(e) {
-    setScore(isCorrect && e.target.value);
-
-    onUpdateScore({ id: question.id, score: score });
+export function RadioFormInputGroup({ id, question, options, onUpdateScore }) {
+  function handleClick(e, optionId, isCorrect) {
+    onUpdateScore({
+      id: id,
+      option: optionId,
+      score: isCorrect && e.target.checked ? 1 : 0,
+    });
   }
 
   return (
@@ -73,12 +65,17 @@ export function RadioFormInputGroup({
               <input
                 className="form-check-input"
                 type="radio"
-                name={option.id}
-                id={option.id}
-                onClick={(e) => handleClick}
+                name={"q-" + id}
+                id={"q-" + id + "-o-" + option.id}
+                onClick={(e) =>
+                  handleClick(e, option.id, option?.isCorrect || false)
+                }
               />
-              <label className="form-check-label" htmlFor={option.id}>
-                {option.question}
+              <label
+                className="form-check-label"
+                htmlFor={"q-" + id + "-o-" + option.id}
+              >
+                {option.option}
               </label>
             </div>
           );

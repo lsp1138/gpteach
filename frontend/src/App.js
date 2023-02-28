@@ -13,7 +13,6 @@ import { MultipleChoice } from "./components/MutlipleChoice";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import axios from "axios";
-
 const renderComponents = {
   content: renderMarkdown,
   table: FlexTable,
@@ -38,7 +37,7 @@ function App() {
       question: "What is dog?",
       botResponse: {
         type: "content",
-        body: "dog is *cao*, as much as I konw portugues this is the case and that is all that I can say",
+        body: "dog is *cao*, as much as I know portugues this is the case and that is all that I can say",
       },
     },
     {
@@ -127,11 +126,8 @@ function App() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log("in handle submit", inputValue);
 
     if (!inputValue) return;
-
-    console.log("started handle submit");
 
     axios
       .post("/api/prompts", { question: inputValue })
@@ -150,8 +146,6 @@ function App() {
             botResponse: response.data,
           },
         ]);
-
-        console.log("chatEntries are ", chatEntries);
 
         setInputValue("");
       })
@@ -179,7 +173,6 @@ function App() {
                   Q: {entry.question}
                 </div>
                 <div className="markdown text-start p-2 border">
-                  {console.log(entry.botResponse.type)}
                   {renderComponents[entry.botResponse.type](
                     entry.botResponse.body
                   )}

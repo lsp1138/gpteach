@@ -2,12 +2,10 @@
 // of conjugation tables
 
 export function FlexTable(body) {
-  console.log("body is", body);
-
   return (
     <div className="d-flex flex-wrap">
       {body.columns.map((column, indexCol) => (
-        <div key={"columns-" + indexCol} className="p-1">
+        <div key={indexCol} className="p-1">
           <table>
             <thead>
               <tr>
@@ -16,7 +14,7 @@ export function FlexTable(body) {
             </thead>
             <tbody>
               {column.rows.map((row, indexRow) => (
-                <tr>
+                <tr key={indexRow}>
                   <td>
                     <i>{row[0]}</i>
                   </td>
