@@ -13,7 +13,7 @@ Question: Conjugate of the verb falar in present and past tense in a table in JS
 Anwswer: {
     "type": "table",
     "body": {
-    "columns": [
+      "columns": [
         {
         "heading": "Present Tense",
         "rows": [
@@ -43,30 +43,39 @@ Anwswer: {
 Question: Create a multiple choice question for a noun
 Answer: {
     "type": "multipleChoice",
-    "body": [{
-    "id": 1,
-    "question": "What is the Portuguese word for 'cat'?",
-    "options": ["Gato", "Cão", "Vaca", "Casa"],
-    "answer": "Gato"
-  }]
+    "body": { 
+      "questions : [
+      {
+        "id": 1,
+        "question": "What is the Portuguese word for 'cat'?",
+        "options": ["Gato", "Cão", "Vaca", "Casa"],
+        "answer": "Gato"
+      }
+    ]}
 }
 
 Question: conjugate the verb comer in present tense
 Answer: {
     "type": "content",
-    "body": "**Comer** (inf), means *to eat*, example: *vamos comer*, conjugation *present tense*: eu *como*, tu *comes*, ele/ela *come*, nós *comemos*, vós *comeis*, eles/elas *comem*"
+    "body": {
+        "content": "**Comer** (inf), means *to eat*, example: *vamos comer*, conjugation *present tense*: eu *como*, tu *comes*, ele/ela *come*, nós *comemos*, vós *comeis*, eles/elas *comem*"
+    }
 }
 
 Question: what is a cow in portuguese
 Answer: {
     "type": "content",
-    "body": "**Vaca** (noun, feminine), english: *cow*, example: *a vaca da minha fazenda*"
+    "body": {
+        "content": "**Vaca** (noun, feminine), english: *cow*, example: *a vaca da minha fazenda*"
+    }
 }
 
 Question: "What is the meaning of the word 'casa'?
 Answer: {
     "type": "content",
-    "body": "**Casa** (noun, feminine), english: *house*, example: *a casa da minha mãe*"
+    "body": { 
+        "content": ["**Casa** (noun, feminine), english: *house*, example: *a casa da minha mãe*"] 
+    }
 }
 """
 

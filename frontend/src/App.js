@@ -8,76 +8,80 @@ import {
   Form,
   Button,
 } from "react-bootstrap";
-import { FlexTable } from "./components/FlexTable.js";
-import { MultipleChoice } from "./components/MutlipleChoice";
+import FlexTable from "./components/FlexTable.js";
+import MultipleChoice from "./components/MutlipleChoice";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import axios from "axios";
+
 const renderComponents = {
-  content: renderMarkdown,
+  content: (body) => (
+    <ReactMarkdown children={body.content} plugin={remarkGfm} />
+  ),
   table: FlexTable,
   multipleChoice: MultipleChoice,
 };
 
-// Render components refactor when possible
-function renderMarkdown(children) {
-  return <ReactMarkdown children={children} remarkPlugins={[remarkGfm]} />;
-}
-
-function App() {
-  const data = [
-    {
-      question: "What does cat mean in Portuguese",
-      botResponse: {
-        type: "content",
-        body: "Cat is *gato*, and this is in portuguese would you know I am just making a long answer so I can get this tested",
+const data = [
+  {
+    question: "What does cat mean in Portuguese",
+    botResponse: {
+      type: "content",
+      body: {
+        content:
+          "Cat is *gato*, and this is in portuguese would you know I am just making a long answer so I can get this tested",
       },
     },
-    {
-      question: "What is dog?",
-      botResponse: {
-        type: "content",
-        body: "dog is *cao*, as much as I know portugues this is the case and that is all that I can say",
+  },
+  {
+    question: "What is dog?",
+    botResponse: {
+      type: "content",
+      body: {
+        content:
+          "dog is *cao*, as much as I know portugues this is the case and that is all that I can say",
       },
     },
-    {
-      question:
-        "Conjugate of the verb falar in present and past tense in a table in JSON with a key 'column-heading' containing the tense as a markdown string and a scond JSON key called 'column-rows' which is an array of arrays of the pronouns and verb conjugations in the different tenses",
-      botResponse: {
-        type: "table",
-        body: {
-          columns: [
-            {
-              heading: "Present Tense",
-              rows: [
-                ["eu", "falo"],
-                ["tu", "falas"],
-                ["ele/ela", "fala"],
-                ["nós", "falamos"],
-                ["vós", "falais"],
-                ["eles/elas", "falam"],
-              ],
-            },
-            {
-              heading: "Past Tense",
-              rows: [
-                ["eu", "falava"],
-                ["tu", "falavas"],
-                ["ele/ela", "falava"],
-                ["nós", "falávamos"],
-                ["vós", "faláveis"],
-                ["eles/elas", "falavam"],
-              ],
-            },
-          ],
-        },
+  },
+  {
+    question:
+      "Conjugate of the verb falar in present and past tense in a table in JSON with a key 'column-heading' containing the tense as a markdown string and a scond JSON key called 'column-rows' which is an array of arrays of the pronouns and verb conjugations in the different tenses",
+    botResponse: {
+      type: "table",
+      body: {
+        columns: [
+          {
+            heading: "Present Tense",
+            rows: [
+              ["eu", "falo"],
+              ["tu", "falas"],
+              ["ele/ela", "fala"],
+              ["nós", "falamos"],
+              ["vós", "falais"],
+              ["eles/elas", "falam"],
+            ],
+          },
+          {
+            heading: "Past Tense",
+            rows: [
+              ["eu", "falava"],
+              ["tu", "falavas"],
+              ["ele/ela", "falava"],
+              ["nós", "falávamos"],
+              ["vós", "faláveis"],
+              ["eles/elas", "falavam"],
+            ],
+          },
+        ],
       },
     },
-    {
-      question: "Create a multiple choice question for a noun",
-      botResponse: {
-        type: "multipleChoice",
-        body: [
+  },
+  {
+    question: "Create a multiple choice question for a noun",
+    botResponse: {
+      type: "multipleChoice",
+      body: {
+        questions: [
           {
             id: 1,
             question: "What is the Portuguese word for 'cat'?",
@@ -101,8 +105,10 @@ function App() {
         ],
       },
     },
-  ];
+  },
+];
 
+function App() {
   const [inputValue, setInputValue] = useState("");
 
   const [chatEntries, setChatEntries] = useState(data);
@@ -173,8 +179,9 @@ function App() {
                   Q: {entry.question}
                 </div>
                 <div className="markdown text-start p-2 border">
-                  {renderComponents[entry.botResponse.type](
-                    entry.botResponse.body
+                  {React.createElement(
+                    renderComponents[entry.botResponse.type],
+                    { ...entry.botResponse.body }
                   )}
                 </div>
               </Row>

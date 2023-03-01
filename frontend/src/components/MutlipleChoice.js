@@ -5,48 +5,7 @@
 
 import { useState } from "react";
 
-export function MultipleChoice(body) {
-  const [questionScore, setQuestionScore] = useState([]);
-  const [isComplete, setIsComplete] = useState(false);
-
-  function calculateScores(newScore) {
-    setQuestionScore([
-      ...questionScore,
-      {
-        ...newScore,
-      },
-    ]);
-
-    setIsComplete(questionScore.length === body.length);
-
-    console.log("is complete", isComplete);
-    console.log("question score", questionScore);
-  }
-
-  function onSubmit() {
-    console.log("on submit");
-  }
-
-  return (
-    <div className="d-flex flex-column p-1">
-      <div>Multiple choice question</div>
-      {body.map((mcQuestion, index) => (
-        <RadioFormInputGroup
-          key={index}
-          onUpdateScore={calculateScores}
-          {...mcQuestion}
-        />
-      ))}
-      <div className="d-flex justify-content-start">
-        <button onClick={onSubmit} disabled={false}>
-          Submit
-        </button>
-      </div>
-    </div>
-  );
-}
-
-export function RadioFormInputGroup({ id, question, options, onUpdateScore }) {
+function RadioFormInputGroup({ id, question, options, onUpdateScore }) {
   function handleClick(e, optionId, isCorrect) {
     onUpdateScore({
       id: id,
@@ -80,6 +39,45 @@ export function RadioFormInputGroup({ id, question, options, onUpdateScore }) {
             </div>
           );
         })}
+      </div>
+    </div>
+  );
+}
+
+export default function MultipleChoice({ questions }) {
+  const [questionScore, setQuestionScore] = useState();
+  const [isComplete, setIsComplete] = useState(false);
+
+  function calculateScores(newScore) {
+    setQuestionScore({
+      ...questionScore,
+    });
+
+    if (questionScore.answered === questions.length) setIsComplete(true);
+
+    console.log("questions are", questions);
+    console.log("is complete", isComplete);
+    console.log("question score", questionScore);
+  }
+
+  function onSubmit() {
+    console.log("on submit");
+  }
+
+  return (
+    <div className="d-flex flex-column p-1">
+      <div>Multiple choice question</div>
+      {questions.map((mcQuestion, index) => (
+        <RadioFormInputGroup
+          key={index}
+          onUpdateScore={calculateScores}
+          {...mcQuestion}
+        />
+      ))}
+      <div className="d-flex justify-content-start">
+        <button onClick={onSubmit} disabled={!isComplete}>
+          Submit
+        </button>
       </div>
     </div>
   );

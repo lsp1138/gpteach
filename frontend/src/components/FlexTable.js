@@ -1,10 +1,10 @@
 // A flex box with tables inside for a responsive output
 // of conjugation tables
 
-export function FlexTable(body) {
+export default function FlexTable({ columns }) {
   return (
     <div className="d-flex flex-wrap">
-      {body.columns.map((column, indexCol) => (
+      {columns.map((column, indexCol) => (
         <div key={indexCol} className="p-1">
           <table>
             <thead>
