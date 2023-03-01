@@ -5,15 +5,52 @@
 
 import { useState } from "react";
 
-function RadioFormInputGroup({ id, question, options, onUpdateScore }) {
-  function handleClick(e, optionId, isCorrect) {
-    onUpdateScore({
-      id: id,
-      option: optionId,
-      score: isCorrect && e.target.checked ? 1 : 0,
+export default function MultipleChoice({ questions }) {
+  const [scores, setScores] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  function handleAnswer(questionId, score) {
+    setScores({
+      ...scores,
+      [questionId]: score,
     });
   }
 
+  const allQuestionsAnswered = Object.keys(scores).length === questions.length;
+
+  return (
+    <div className="d-flex flex-column p-1">
+      <div>Multiple choice question</div>
+      {questions.map((mcQuestion, index) => (
+        <RadioFormInputGroup
+          key={index}
+          onAnswer={handleAnswer}
+          isAnswered={isSubmitted}
+          isCorrect={scores[mcQuestion.id] ?? false}
+          {...mcQuestion}
+        />
+      ))}
+      <div className="d-flex justify-content-start">
+        <button
+          onClick={() => setIsSubmitted(true)}
+          disabled={!allQuestionsAnswered}
+        >
+          Submit
+        </button>
+      </div>
+      {isSubmitted ? <p>{JSON.stringify(scores)}</p> : ""}
+    </div>
+  );
+}
+
+function RadioFormInputGroup({
+  id,
+  question,
+  options,
+  onAnswer,
+  isCorrect,
+  isAnswered,
+}) {
   return (
     <div>
       <div className="fst-italic">{question}</div>
@@ -26,9 +63,7 @@ function RadioFormInputGroup({ id, question, options, onUpdateScore }) {
                 type="radio"
                 name={"q-" + id}
                 id={"q-" + id + "-o-" + option.id}
-                onClick={(e) =>
-                  handleClick(e, option.id, option?.isCorrect || false)
-                }
+                onClick={() => onAnswer(id, option?.isCorrect || false)}
               />
               <label
                 className="form-check-label"
@@ -40,45 +75,7 @@ function RadioFormInputGroup({ id, question, options, onUpdateScore }) {
           );
         })}
       </div>
-    </div>
-  );
-}
-
-export default function MultipleChoice({ questions }) {
-  const [questionScore, setQuestionScore] = useState();
-  const [isComplete, setIsComplete] = useState(false);
-
-  function calculateScores(newScore) {
-    setQuestionScore({
-      ...questionScore,
-    });
-
-    if (questionScore.answered === questions.length) setIsComplete(true);
-
-    console.log("questions are", questions);
-    console.log("is complete", isComplete);
-    console.log("question score", questionScore);
-  }
-
-  function onSubmit() {
-    console.log("on submit");
-  }
-
-  return (
-    <div className="d-flex flex-column p-1">
-      <div>Multiple choice question</div>
-      {questions.map((mcQuestion, index) => (
-        <RadioFormInputGroup
-          key={index}
-          onUpdateScore={calculateScores}
-          {...mcQuestion}
-        />
-      ))}
-      <div className="d-flex justify-content-start">
-        <button onClick={onSubmit} disabled={!isComplete}>
-          Submit
-        </button>
-      </div>
+      {isAnswered ? isCorrect ? <p>correct</p> : <p>wrong</p> : ""}
     </div>
   );
 }
