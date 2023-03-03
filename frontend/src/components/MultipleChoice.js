@@ -1,14 +1,8 @@
-// A flex box with multiple choice questions
-// questions are rendered as groups of radio buttons with
-// a built in handler that returns correct of incorrect and a
-// a score when all the questions are answered
-
 import { useState } from "react";
 
 export default function MultipleChoice({ questions }) {
   const [scores, setScores] = useState({});
-  const [finalScore, setFinalScore] = useState("");
-  const [status, setStatus] = useState("not-answered");
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   function handleAnswer(questionId, score) {
     setScores({
@@ -17,20 +11,7 @@ export default function MultipleChoice({ questions }) {
     });
   }
 
-  function handleSubmit() {
-    setStatus("submitted");
-    setFinalScore(
-      `${Object.values(scores).reduce((a, b) => a + b, 0)}/${questions.length}`
-    );
-  }
-
-  if (
-    status === "not-answered" &&
-    Object.keys(scores).length === questions.length
-  ) {
-    setStatus("answered");
-  }
-
+  const allQuestionsAnswered = Object.keys(scores).length === questions.length;
 
   return (
     <div className="d-flex flex-column p-1">
@@ -39,32 +20,30 @@ export default function MultipleChoice({ questions }) {
         <RadioFormInputGroup
           key={index}
           onAnswer={handleAnswer}
-          score={scores[mcQuestion.id] ?? 0}
-          status={status}
+          isAnswered={isSubmitted}
+          isCorrect={scores[mcQuestion.id] ?? false}
           {...mcQuestion}
         />
       ))}
       <div className="d-flex justify-content-start">
-        <button onClick={handleSubmit} disabled={status !== "answered"}>
+        <button
+          onClick={() => setIsSubmitted(true)}
+          disabled={!allQuestionsAnswered}
+        >
           Submit
         </button>
       </div>
-      {status === "submitted" ? (
-        <p className="alert alert-light">Final score is: {finalScore}</p>
-      ) : (
-        ""
-      )}
+      {isSubmitted ? <p>{JSON.stringify(scores)}</p> : ""}
     </div>
   );
 }
-
 function RadioFormInputGroup({
   id,
   question,
   options,
   onAnswer,
-  score,
-  status,
+  isCorrect,
+  isAnswered,
 }) {
   return (
     <div>
@@ -90,15 +69,7 @@ function RadioFormInputGroup({
           );
         })}
       </div>
-      {status === "submitted" ? (
-        <p className={"alert alert-" + (score ? "success" : "danger")}>
-          {score ? "Correct" : "Incorrect"}
-        </p>
-      ) : (
-        ""
-      )}
+      {isAnswered ? isCorrect ? <p>correct</p> : <p>wrong</p> : ""}
     </div>
   );
 }
-
-// create an alert box in bootstrap which shows if a answer is right or wrong
