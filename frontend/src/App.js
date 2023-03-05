@@ -124,6 +124,7 @@ function App() {
   }, [loaded]);
 
   function apiHealthcheck() {
+    console.log("in healthcheck");
     axios
       .get("/api/healthcheck")
       .then((response) => console.log(response.data))
