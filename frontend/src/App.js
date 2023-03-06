@@ -9,7 +9,7 @@ import {
   Button,
 } from "react-bootstrap";
 import FlexTable from "./components/FlexTable.js";
-import MultipleChoice from "./components/MutlipleChoice";
+import MultipleChoice from "./components/MultipleChoice";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import axios from "axios";
@@ -34,18 +34,7 @@ const data = [
     },
   },
   {
-    question: "What is dog?",
-    botResponse: {
-      type: "content",
-      body: {
-        content:
-          "dog is *cao*, as much as I know portugues this is the case and that is all that I can say",
-      },
-    },
-  },
-  {
-    question:
-      "Conjugate of the verb falar in present and past tense in a table in JSON with a key 'column-heading' containing the tense as a markdown string and a scond JSON key called 'column-rows' which is an array of arrays of the pronouns and verb conjugations in the different tenses",
+    question: "Conjugate of the verb falar in present tense in a table",
     botResponse: {
       type: "table",
       body: {
@@ -59,17 +48,6 @@ const data = [
               ["nós", "falamos"],
               ["vós", "falais"],
               ["eles/elas", "falam"],
-            ],
-          },
-          {
-            heading: "Past Tense",
-            rows: [
-              ["eu", "falava"],
-              ["tu", "falavas"],
-              ["ele/ela", "falava"],
-              ["nós", "falávamos"],
-              ["vós", "faláveis"],
-              ["eles/elas", "falavam"],
             ],
           },
         ],
@@ -88,16 +66,6 @@ const data = [
             options: [
               { id: 1, option: "Gato", isCorrect: true },
               { id: 2, option: "Cão" },
-              { id: 3, option: "Vaca" },
-              { id: 4, option: "Casa" },
-            ],
-          },
-          {
-            id: 2,
-            question: "What is the Portuguese word for 'dog'?",
-            options: [
-              { id: 1, option: "Gato" },
-              { id: 2, option: "Cão", isCorrect: true },
               { id: 3, option: "Vaca" },
               { id: 4, option: "Casa" },
             ],
