@@ -50,39 +50,6 @@ const data = [
               ["eles/elas", "falam"],
             ],
           },
-          {
-            heading: "Present Tense",
-            rows: [
-              ["eu", "falo"],
-              ["tu", "falas"],
-              ["ele/ela", "fala"],
-              ["nós", "falamos"],
-              ["vós", "falais"],
-              ["eles/elas", "falam"],
-            ],
-          },
-          {
-            heading: "Present Tense",
-            rows: [
-              ["eu", "falo"],
-              ["tu", "falas"],
-              ["ele/ela", "fala"],
-              ["nós", "falamos"],
-              ["vós", "falais"],
-              ["eles/elas", "falam"],
-            ],
-          },
-          {
-            heading: "Present Tense",
-            rows: [
-              ["eu", "falo"],
-              ["tu", "falas"],
-              ["ele/ela", "fala"],
-              ["nós", "falamos"],
-              ["vós", "falais"],
-              ["eles/elas", "falam"],
-            ],
-          },
         ],
       },
     },
@@ -93,16 +60,6 @@ const data = [
       type: "multipleChoice",
       body: {
         questions: [
-          {
-            id: 1,
-            question: "What is the Portuguese word for 'cat'?",
-            options: [
-              { id: 1, option: "Gato", isCorrect: true },
-              { id: 2, option: "Cão" },
-              { id: 3, option: "Vaca" },
-              { id: 4, option: "Casa" },
-            ],
-          },
           {
             id: 1,
             question: "What is the Portuguese word for 'cat'?",
@@ -185,14 +142,14 @@ function App() {
   return (
     <>
       <Navbar className="p-1 fixed-top" bg="dark" variant="dark">
-        <Navbar.Brand href="#home">Teach GPT</Navbar.Brand>
+        <Navbar.Brand href="#home">GPteach</Navbar.Brand>
         <Nav className="">
           <Nav.Link href="#features">Features</Nav.Link>
           <Nav.Link href="#pricing">Pricing</Nav.Link>
           <Nav.Link href="#about">About</Nav.Link>
         </Nav>
       </Navbar>
-      <Container className="my-2 d-flex flex-column justify-content-end bg-light rounded">
+      <Container className="mb-1 mt-5 d-flex flex-column justify-content-end bg-light">
         <Row className="overflow-auto d-flex flex-column-reverse">
           <Col>
             {chatEntries.map((entry, index) => (

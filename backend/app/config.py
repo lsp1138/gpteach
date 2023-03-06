@@ -12,6 +12,8 @@ class Settings(BaseSettings):
     environment: str = "dev"
     testing: bool = 0
     openai_api_key: str
+    prompt_temperature: float = 0.0
+    prompt_max_tokens: int = 1000
 
     class Config:
         env_file = ".env"

@@ -50,14 +50,17 @@ async def create_prompt(prompt: Prompt, settings: Settings = Depends(get_setting
     prompt_str = generate_prompt(prompt.question)
 
     log.info(f"Prompt question {prompt_str}")
+    log.info(
+        f"prompt settings: temperature {settings.prompt_temperature}, max_tokens {settings.prompt_max_tokens}"
+    )
 
     openai.api_key = settings.openai_api_key
 
     response = openai.Completion.create(
         model="text-davinci-003",
         prompt=prompt_str,
-        temperature=0.0,
-        max_tokens=500,
+        temperature=settings.prompt_temperature,
+        max_tokens=settings.prompt_max_tokens,
     )
 
     response_text = "{" + response.choices[0].text
