@@ -50,6 +50,39 @@ const data = [
               ["eles/elas", "falam"],
             ],
           },
+          {
+            heading: "Present Tense",
+            rows: [
+              ["eu", "falo"],
+              ["tu", "falas"],
+              ["ele/ela", "fala"],
+              ["nós", "falamos"],
+              ["vós", "falais"],
+              ["eles/elas", "falam"],
+            ],
+          },
+          {
+            heading: "Present Tense",
+            rows: [
+              ["eu", "falo"],
+              ["tu", "falas"],
+              ["ele/ela", "fala"],
+              ["nós", "falamos"],
+              ["vós", "falais"],
+              ["eles/elas", "falam"],
+            ],
+          },
+          {
+            heading: "Present Tense",
+            rows: [
+              ["eu", "falo"],
+              ["tu", "falas"],
+              ["ele/ela", "fala"],
+              ["nós", "falamos"],
+              ["vós", "falais"],
+              ["eles/elas", "falam"],
+            ],
+          },
         ],
       },
     },
@@ -60,6 +93,16 @@ const data = [
       type: "multipleChoice",
       body: {
         questions: [
+          {
+            id: 1,
+            question: "What is the Portuguese word for 'cat'?",
+            options: [
+              { id: 1, option: "Gato", isCorrect: true },
+              { id: 2, option: "Cão" },
+              { id: 3, option: "Vaca" },
+              { id: 4, option: "Casa" },
+            ],
+          },
           {
             id: 1,
             question: "What is the Portuguese word for 'cat'?",
@@ -134,7 +177,7 @@ function App() {
 
   return (
     <>
-      <Navbar className="p-1" bg="dark" variant="dark">
+      <Navbar className="p-1 fixed-top" bg="dark" variant="dark">
         <Navbar.Brand href="#home">Teach GPT</Navbar.Brand>
         <Nav className="">
           <Nav.Link href="#features">Features</Nav.Link>
