@@ -127,6 +127,7 @@ function App() {
         setInputValue("");
       })
       .catch((error) => {
+        setInputValue("");
         console.log("something went wrong", error);
       });
   }
@@ -163,6 +164,7 @@ function App() {
           <Form>
             <Form.Group className="py-1">
               <Form.Control
+                value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="write your question here"
               />
