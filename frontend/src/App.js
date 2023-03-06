@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Container,
   Navbar,
@@ -126,6 +126,8 @@ function App() {
 
   const [loaded, setLoad] = useState(false);
 
+  const bottomRef = useRef(null);
+
   useEffect(() => {
     if (loaded) return;
 
@@ -141,6 +143,11 @@ function App() {
       .then((response) => console.log(response.data))
       .catch((error) => console.log("Failed fetch", error));
   }
+
+  useEffect(() => {
+    // 👇️ scroll to bottom every time messages change
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chatEntries]);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -203,6 +210,9 @@ function App() {
             ))}
           </Col>
         </Row>
+        <Row ref={bottomRef}></Row>
+      </Container>
+      <Container style={{ height: "65px" }}>
         <Row className="py-3 bg-light">
           <Form>
             <Form.Group className="py-1">
