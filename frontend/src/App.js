@@ -126,7 +126,7 @@ function App() {
   function apiHealthcheck() {
     console.log("in healthcheck");
     axios
-      .get("/api/healthcheck")
+      .get(process.env.REACT_APP_BACKEND_URL + "/healthcheck")
       .then((response) => console.log(response.data))
       .catch((error) => console.log("Failed fetch", error));
   }
@@ -137,7 +137,9 @@ function App() {
     if (!inputValue) return;
 
     axios
-      .post("/api/prompts", { question: inputValue })
+      .post(process.env.REACT_APP_BACKEND_URL + "/prompts", {
+        question: inputValue,
+      })
       .then((response) => {
         console.log(
           "response is",
