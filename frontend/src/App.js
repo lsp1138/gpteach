@@ -34,7 +34,7 @@ const data = [
     },
   },
   {
-    question: "Conjugate of the verb falar in present tense in a table",
+    question: "Conjugate the verb falar in present tense in a table",
     botResponse: {
       type: "table",
       body: {
